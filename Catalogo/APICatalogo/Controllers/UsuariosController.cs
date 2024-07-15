@@ -99,29 +99,19 @@ public class UsuariosController : ControllerBase {
     public ActionResult<IEnumerable<UsuarioDTO>> Get([FromQuery] QueryStringParameters queryStringParameters)
     {
         var usuarios = _uof.UsuarioRepository.GetUsuarios(queryStringParameters);
-
-        var metadata = new
-        {
-            usuarios.TotalCount,
-            usuarios.PageSize,
-            usuarios.CurrentPage,
-            usuarios.TotalPages,
-            usuarios.HasNext,
-            usuarios.HasPrevious
-        };
-
-        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-
-        var usuariosDTO = _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
-        return Ok(usuariosDTO);
+        return ObterUsuarios(usuarios);
     }
 
     [HttpGet("filter/nome/pagination")]
     public ActionResult<IEnumerable<UsuarioDTO>> GetUsuariosFilterNome([FromQuery] NomeFilter nomeFilter)
     {
          var usuarios = _uof.UsuarioRepository.GetUsuariosFiltroNome(nomeFilter);
+         return ObterUsuarios(usuarios);
+    }
 
-        var metadata = new
+    private ActionResult<IEnumerable<UsuarioDTO>> ObterUsuarios(PagedList<Usuario> usuarios)
+    {
+         var metadata = new
         {
             usuarios.TotalCount,
             usuarios.PageSize,
@@ -133,9 +123,11 @@ public class UsuariosController : ControllerBase {
 
         Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
-        var usuariosDTO = _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
-        return Ok(usuariosDTO);
+        var usuarioDTOs = _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
+        return Ok(usuarioDTOs);
 
     }
+
+
 
 }

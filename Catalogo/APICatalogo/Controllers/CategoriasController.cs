@@ -118,29 +118,19 @@ public class CategoriasController : ControllerBase
     public ActionResult<IEnumerable<CategoriaDTO>> Get([FromQuery] QueryStringParameters queryStringParameters)
     {
         var categorias = _uof.CategoriaRepository.GetCategorias(queryStringParameters);
-
-        var metadata = new
-        {
-            categorias.TotalCount,
-            categorias.PageSize,
-            categorias.CurrentPage,
-            categorias.TotalPages,
-            categorias.HasNext,
-            categorias.HasPrevious
-        };
-
-        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-
-        var categoriasDTO = _mapper.Map<IEnumerable<CategoriaDTO>>(categorias);
-        return Ok(categoriasDTO);
+        return ObterCategorias(categorias);
     }
 
     [HttpGet("filter/nome/pagination")]
     public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasFilterNome([FromQuery] NomeFilter nomeFilter)
     {
-         var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(nomeFilter);
+        var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(nomeFilter);
+        return ObterCategorias(categorias);
+    }
 
-        var metadata = new
+        private ActionResult<IEnumerable<CategoriaDTO>> ObterCategorias(PagedList<Categoria> categorias)
+    {
+         var metadata = new
         {
             categorias.TotalCount,
             categorias.PageSize,
@@ -152,9 +142,8 @@ public class CategoriasController : ControllerBase
 
         Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
-        var categoriasDTO = _mapper.Map<IEnumerable<CategoriaDTO>>(categorias);
-        return Ok(categoriasDTO);
-
+        var categoriaDTOs = _mapper.Map<IEnumerable<CategoriaDTO>>(categorias);
+        return Ok(categoriaDTOs);
 
     }
     
