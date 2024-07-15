@@ -55,7 +55,6 @@ public class ProdutosController : ControllerBase
         if (produtos is null)
             return NotFound();
 
-        //var destino = _mapper.Map<Destino>(origem);
         var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
 
         return Ok(produtosDto);
@@ -151,6 +150,21 @@ public class ProdutosController : ControllerBase
         return ObterProdutos(produtos); 
     }
 
+    [HttpGet("nome/categoria/")]
+    public ActionResult<IEnumerable<ProdutoDTO>> GetProdPorCategoria([FromQuery] NomeFilter nomeFilter)
+    {
+        var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(nomeFilter);
+        var idCategoria = categorias.FirstOrDefault().CategoriaId;
+
+        var produtos = _uof.ProdutoRepository.GetProdutosPorCategoria(idCategoria);
+
+        if (produtos is null)
+            return NotFound();
+
+        var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
+        return Ok(produtosDto);   
+    }
+
     private ActionResult<IEnumerable<ProdutoDTO>> ObterProdutos(PagedList<Produto> produtos)
     {
          var metadata = new
@@ -169,5 +183,6 @@ public class ProdutosController : ControllerBase
         return Ok(produtosDto);
 
     }
+
 
 }
