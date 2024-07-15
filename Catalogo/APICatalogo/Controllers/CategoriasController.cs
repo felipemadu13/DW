@@ -115,9 +115,9 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpGet("pagination")]
-    public ActionResult<IEnumerable<CategoriaDTO>> Get([FromQuery] CategoriasParameters categoriasParameters)
+    public ActionResult<IEnumerable<CategoriaDTO>> Get([FromQuery] QueryStringParameters queryStringParameters)
     {
-        var categorias = _uof.CategoriaRepository.GetCategorias(categoriasParameters);
+        var categorias = _uof.CategoriaRepository.GetCategorias(queryStringParameters);
 
         var metadata = new
         {
@@ -136,9 +136,9 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpGet("filter/nome/pagination")]
-    public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasFilterNome([FromQuery] CategoriasFiltroNome categoriasFiltroNome)
+    public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasFilterNome([FromQuery] NomeFilter nomeFilter)
     {
-         var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(categoriasFiltroNome);
+         var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(nomeFilter);
 
         var metadata = new
         {

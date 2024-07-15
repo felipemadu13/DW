@@ -96,9 +96,9 @@ public class UsuariosController : ControllerBase {
     }
 
     [HttpGet("pagination")]
-    public ActionResult<IEnumerable<UsuarioDTO>> Get([FromQuery] UsuariosParameters usuariosParameters)
+    public ActionResult<IEnumerable<UsuarioDTO>> Get([FromQuery] QueryStringParameters queryStringParameters)
     {
-        var usuarios = _uof.UsuarioRepository.GetUsuarios(usuariosParameters);
+        var usuarios = _uof.UsuarioRepository.GetUsuarios(queryStringParameters);
 
         var metadata = new
         {
@@ -117,9 +117,9 @@ public class UsuariosController : ControllerBase {
     }
 
     [HttpGet("filter/nome/pagination")]
-    public ActionResult<IEnumerable<UsuarioDTO>> GetUsuariosFilterNome([FromQuery] UsuariosFiltroNome usuariosFiltroNome)
+    public ActionResult<IEnumerable<UsuarioDTO>> GetUsuariosFilterNome([FromQuery] NomeFilter nomeFilter)
     {
-         var usuarios = _uof.UsuarioRepository.GetUsuariosFiltroNome(usuariosFiltroNome);
+         var usuarios = _uof.UsuarioRepository.GetUsuariosFiltroNome(nomeFilter);
 
         var metadata = new
         {
@@ -136,6 +136,6 @@ public class UsuariosController : ControllerBase {
         var usuariosDTO = _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
         return Ok(usuariosDTO);
 
-
     }
+
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7qrPjtLEn48=",
+  "dgSpecHash": "krTH3cp6FXA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\felip\\Desktop\\APICatalogo\\APICatalogo.csproj",
+  "projectFilePath": "C:\\Users\\felip\\Documents\\Github\\DW\\Catalogo\\APICatalogo\\APICatalogo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\felip\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\felip\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

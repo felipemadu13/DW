@@ -138,9 +138,9 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("pagination")]
-    public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] ProdutosParameters produtosParameters)
+    public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] QueryStringParameters queryStringParameters)
     {
-        var produtos = _uof.ProdutoRepository.GetProdutos(produtosParameters);
+        var produtos = _uof.ProdutoRepository.GetProdutos(queryStringParameters);
 
         var metadata = new
         {
@@ -160,9 +160,9 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("filter/preco/pagination")]
-    public ActionResult<IEnumerable<ProdutoDTO>> GetProdutosFilterPreco([FromQuery] ProdutosFiltroPreco produtosFilterParameters)
+    public ActionResult<IEnumerable<ProdutoDTO>> GetProdutosFilterPreco([FromQuery] PrecoFilter precoFilter)
     {
-        var produtos = _uof.ProdutoRepository.GetProdutosFiltroPreco(produtosFilterParameters);
+        var produtos = _uof.ProdutoRepository.GetProdutosFiltroPreco(precoFilter);
         return ObterProdutos(produtos); 
         
     }
@@ -185,4 +185,5 @@ public class ProdutosController : ControllerBase
         return Ok(produtosDto);
 
     }
+
 }
