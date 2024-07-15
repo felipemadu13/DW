@@ -141,22 +141,7 @@ public class ProdutosController : ControllerBase
     public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] QueryStringParameters queryStringParameters)
     {
         var produtos = _uof.ProdutoRepository.GetProdutos(queryStringParameters);
-
-        var metadata = new
-        {
-            produtos.TotalCount,
-            produtos.PageSize,
-            produtos.CurrentPage,
-            produtos.TotalPages,
-            produtos.HasNext,
-            produtos.HasPrevious
-        };
-
-        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-
-        var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
-        return Ok(produtosDto);
-       
+        return ObterProdutos(produtos);
     }
 
     [HttpGet("filter/preco/pagination")]
@@ -164,7 +149,6 @@ public class ProdutosController : ControllerBase
     {
         var produtos = _uof.ProdutoRepository.GetProdutosFiltroPreco(precoFilter);
         return ObterProdutos(produtos); 
-        
     }
 
     private ActionResult<IEnumerable<ProdutoDTO>> ObterProdutos(PagedList<Produto> produtos)
