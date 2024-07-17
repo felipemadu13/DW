@@ -156,7 +156,7 @@ public class ProdutosController : ControllerBase
         var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(nomeFilter);
         var idCategoria = categorias.FirstOrDefault().CategoriaId;
 
-        var produtos = _uof.ProdutoRepository.GetProdutosPorCategoria(idCategoria);
+        var produtos = _uof.ProdutoRepository.GetProdutosPorCategoriaNome(idCategoria, nomeFilter); 
 
         if (produtos is null)
             return NotFound();

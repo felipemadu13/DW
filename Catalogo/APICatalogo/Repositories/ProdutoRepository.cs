@@ -14,6 +14,13 @@ public class ProdutoRepository : Repository<Produto>, IProdutoRepository
         return GetAll().Where(c => c.CategoriaId == id);
     }
 
+    public PagedList<Produto> GetProdutosPorCategoriaNome(int id, NomeFilter nomeFilter)
+    {
+        var produtos = GetAll().Where(c => c.CategoriaId == id).AsQueryable();
+        var produtosOrdenados = PagedList<Produto>.ToPagedList(produtos, nomeFilter.PageNumber, nomeFilter.PageSize);
+        return produtosOrdenados;
+    }
+
     public PagedList<Produto> GetProdutos(QueryStringParameters queryStringParameters)
     {
         var produtos = GetAll().OrderBy(p => p.ProdutoId).AsQueryable();
